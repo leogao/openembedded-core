@@ -71,7 +71,7 @@ python do_preconfigure() {
         distro_id = distro.split(":")[0].replace('-','_')
         distro_triple = distro.split(":")[1]
         case += '\\n    .Case("' + distro_id + '", Distro::' + distro_id.upper() + ')'
-        triple += '\\n   if (Distro.Is' + distro_id.upper() + '())\\n     return "x86_64-' + distro_triple + '-linux",'
+        triple += '\\n   if (Distro.Is' + distro_id.upper() + '())\\n     return "x86_64-' + distro_triple + '-linux";'
         name += '\\n    '+ distro_id.upper() + ','
         check += '\\nbool Is' + distro_id.upper() + '() const { return DistroVal == ' + distro_id.upper() + '; }'
         oe_names +=  distro_id.upper() + ' ||'
@@ -82,9 +82,9 @@ python do_preconfigure() {
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
     cmd = ['sed', '-i', 's#//CLANG_EXTRA_OE_DISTRO_CHECK#%s#g' % check, source + '/clang/include/clang/Driver/Distro.h']
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-    cmd = ['sed', '-i', 's#//CLANG_EXTRA_OE_DISTRO_TRIPLES#%s#g' % triple, source + '/clang/lib/Driver/ToolChains/Linux.cpp']
+    cmd = ['sed', '-i', 's#//CLANG_EXTRA_OE_DISTRO_TRIPLE#%s#g' % triple, source + '/clang/lib/Driver/ToolChains/Linux.cpp']
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-    cmd = ['sed', '-i', 's#//CLANG_EXTRA_OE_DISTRO_CASES#%s#g' % case, source + '/clang/lib/Driver/Distro.cpp']
+    cmd = ['sed', '-i', 's#//CLANG_EXTRA_OE_DISTRO_CASE#%s#g' % case, source + '/clang/lib/Driver/Distro.cpp']
     subprocess.check_output(cmd, stderr=subprocess.STDOUT)
 }
 
